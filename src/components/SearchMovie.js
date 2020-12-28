@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MovieCard from './MovieCard';
 
+
 const OMDB_API = process.env.REACT_APP_OMDB_API_KEY
 
 export default class SearchMovie extends Component {
@@ -24,40 +25,51 @@ export default class SearchMovie extends Component {
         
         fetch(OMDB_API+`${this.state.movieTitle}`)
         .then(resp => resp.json())
-        .then(data => {
-            console.log(data.Search)
+        .then(movie => {
             this.setState({
-                movieData: data})
+                movieTitle: this.state.movieTitle,
+                movieData: movie.Search
+            })
+            console.log(movie.Search)
         })
         .catch(err => {
             console.log(err)
         })
-        // this.resetSearch()
     }
 
-    // resetSearch = () => {
-    //     this.setState({
-    //         movieTitle: '',
-    //     })
-    // }
 
 
     render() {
-
-        const { movieData } = this.state.movieData
+        console.log(this.state)
+        const items = this.state.movieData.map((item) =>
+        <ul>
+            <li key={item.imdbDB}>{item.Title} Year Released: {item.Year}</li>
+        </ul>
+       )
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor='movieTitle' />
-                        <strong>Search for Movie by Title:</strong>
-                    <input type='text' name='movieTitle' value={this.state.movieTitle} onChange={this.handleChange} />
-                    <input type='submit' value='submit'/>
+                    <input 
+                        type='text'
+                        placeholder='Search for movie..'
+                        onChange={this.handleChange}
+                    />
                 </form>
-                <ul>
-                    {movieData && movieData.length > 0 ? movieData.map(movie => <MovieCard movieData={movieData} handleSubmit={this.handleSubmit} key={movie.imdbID}>{movie.Title}</MovieCard>) :
-                    "Loading..."}
-                </ul>
+                <div>
+                    <MovieCard movieInfo={this.state.movieData}/>
+                    {items}
+                </div>
             </div>
         )
     }
 }
+
+
+// {/* <form onSubmit={this.handleSubmit}>
+//                     <label htmlFor='movieTitle' />
+//                         <strong>Search for Movie by Title:</strong>
+//                     <input type='text' name='movieTitle' value={this.state.movieTitle} onChange={this.handleChange} />
+//                     <input type='submit' value='submit'/>
+//                 </form>
+//                 <ul>
+//                 </ul> */}
