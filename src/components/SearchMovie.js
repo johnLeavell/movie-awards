@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import MovieCard from './MovieCard';
+import MovieResults from './MovieResults';
+
 
 const OMDB_API = process.env.REACT_APP_OMDB_API_KEY
 
@@ -9,12 +10,13 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
+            nominations: [],
         }
     }
 
-    handleChange = e => {
+    handleMovieTitleChange = e => {
         this.setState({
-          movieTitle: e.target.value
+          movieTitle: e.target.value.trim()
         })
     }
      
@@ -39,18 +41,22 @@ export default class SearchMovie extends Component {
         })
     }
 
+    
     render() {
         console.log(this.state)
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <input 
+                    <input
+                        name="movie"
                         type='text'
                         placeholder='Search for movie..'
-                        onChange={this.handleChange}
+                        onChange={this.handleMovieTitleChange}
                     />
                 </form>
-                <MovieCard movieInfo={this.state.movieData}/>
+                <div>
+                    <MovieResults movieInfo={this.state.movieData}/>
+                </div>
             </div>
         )
     }

@@ -1,11 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class MovieCard extends Component {
+const MovieResults = (props) => {
     
-    render(){
-        console.log(this.props.movieInfo);
-
-        const items = this.props.movieInfo.map((item) =>
+    const items = props.movieInfo.map((item) =>
         <li key={item.imdbDB}>{item.Title} 
             <br/>Year Released: {item.Year}
         </li>);
@@ -15,7 +12,6 @@ class MovieCard extends Component {
                 {!{items} ? "please try again" : <ul>{items}</ul>}
             </div>
         )
-    }   
 }
 
-export default MovieCard;
+export default MovieResults;
