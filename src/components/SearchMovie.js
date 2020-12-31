@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MovieResults from './MovieResults';
-
+import './style.css'
 
 const OMDB_API = process.env.REACT_APP_OMDB_API_KEY
 
@@ -10,6 +10,10 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
+            currentItem: {
+                text: '',
+                key: ''
+            }
         }
     }
 
@@ -34,21 +38,38 @@ export default class SearchMovie extends Component {
         })
 
     }
-    
+    addItem = e => {
+        e.preventDefault();
+        const newItem = this.state.currentItem;
+        if(newItem.text !=="") {
+            const data = [...this.state.movieData, newItem];
+            this.setState({
+                movieData: data,
+                currentItem:{
+                    text: '',
+                    key: '',
+                }
+            })
+        }
+    }
+
     render() {
         console.log(this.state)
         return (
             <div>
-                <form onSubmit={this.fetchMovieData}>
+                <form className='form' onSubmit={this.fetchMovieData}>
                     <input
+                        value={this.state.movieTitle}
+                        className='input'
                         name="movie"
                         type='text'
                         placeholder='Search for movie..'
                         onChange={this.handleMovieTitleChange}
                     />
+                    <button className='button' type='submit'>Search</button>
                 </form>
                 <div>
-                    <MovieResults movieInfo={this.state.movieData}/>
+                    <MovieResults movieInfo={this.state.movieData} addItem={this.addItem}/>
                 </div>
             </div>
         )

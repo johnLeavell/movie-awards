@@ -1,15 +1,19 @@
 import React from 'react';
-
+import './style.css'
 const MovieResults = (props) => {
     
-    const items = props.movieInfo.map((item) =>
-        <li key={item.imdbDB}>{item.Title} 
+    const items = props.movieInfo.map((item, index) =>
+        <li key={index} className='list-item'>
+            {item.Title} 
             <br/>Year Released: {item.Year}
+            <button className='button'>add to nominees</button>
         </li>);
 
         return (
             <div>
+                <container className='container'>
                 {!{items} ? "please try again" : <ul>{items}</ul>}
+                </container>
             </div>
         )
 }
