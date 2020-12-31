@@ -10,7 +10,6 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
-            nominations: [],
         }
     }
 
@@ -20,33 +19,27 @@ export default class SearchMovie extends Component {
         })
     }
      
-    handleSubmit = e => {
+    fetchMovieData = (e) =>{
         e.preventDefault();
-        
         fetch(OMDB_API+`${this.state.movieTitle}`)
         .then(resp => resp.json())
-        .then(movie => {
-            if(!movie.Search){
-                this.setState({ movieData: []});
-                return alert("Unable to find a match. Please try again");
-                
-            }
+        .then(movie => {console.log(movie.Search)
             this.setState({
-                movieTitle: this.state.movieTitle,
-                movieData: movie.Search
+                movieData: movie.Search,
+                movieTitle: ''
             })
         })
         .catch(err => {
             console.log(err)
         })
-    }
 
+    }
     
     render() {
         console.log(this.state)
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.fetchMovieData}>
                     <input
                         name="movie"
                         type='text'
