@@ -10,10 +10,6 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
-            currentItem: {
-                text: '',
-                key: ''
-            }
         }
     }
 
@@ -30,46 +26,35 @@ export default class SearchMovie extends Component {
         .then(movie => {console.log(movie.Search)
             this.setState({
                 movieData: movie.Search,
-                movieTitle: ''
             })
         })
         .catch(err => {
             console.log(err)
         })
+    }
 
-    }
-    addItem = e => {
-        e.preventDefault();
-        const newItem = this.state.currentItem;
-        if(newItem.text !=="") {
-            const data = [...this.state.movieData, newItem];
-            this.setState({
-                movieData: data,
-                currentItem:{
-                    text: '',
-                    key: '',
-                }
-            })
-        }
-    }
+  
+
 
     render() {
         console.log(this.state)
+
         return (
             <div>
                 <form className='form' onSubmit={this.fetchMovieData}>
                     <input
-                        value={this.state.movieTitle}
+                        // value={this.state.movieTitle}
                         className='input'
                         name="movie"
                         type='text'
+                        ref={input => this.search = input}
                         placeholder='Search for movie..'
                         onChange={this.handleMovieTitleChange}
                     />
                     <button className='button' type='submit'>Search</button>
                 </form>
                 <div>
-                    <MovieResults movieInfo={this.state.movieData} addItem={this.addItem}/>
+                    <MovieResults movieInfo={this.state.movieData} />
                 </div>
             </div>
         )
