@@ -10,10 +10,8 @@ const MovieResults = (props) => {
         </li>);
 
         return (
-            <div>
-                <container className='container'>
+            <div className='wraper'>
                 {!{items} ? "please try again" : <ul>{items}</ul>}
-                </container>
             </div>
         )
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MovieResults from './MovieResults';
+
 import './style.css'
 
 const OMDB_API = process.env.REACT_APP_OMDB_API_KEY
@@ -10,6 +11,7 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
+            filteredMovies: [],
         }
     }
 
@@ -18,7 +20,7 @@ export default class SearchMovie extends Component {
           movieTitle: e.target.value.trim()
         })
     }
-     
+
     fetchMovieData = (e) =>{
         e.preventDefault();
         fetch(OMDB_API+`${this.state.movieTitle}`)
@@ -26,24 +28,44 @@ export default class SearchMovie extends Component {
         .then(movie => {console.log(movie.Search)
             this.setState({
                 movieData: movie.Search,
+                filteredMovies: movie.Search
             })
         })
         .catch(err => {
             console.log(err)
         })
+        // clears search bar, may not be necessary
+        // this.clearSearch()
+    }
+     // clearSearch = () => {
+    //     this.setState({
+    //         movieTitle: ''
+    //     })
+    // }
+
+    handleSearch = e => {
+        //iterate through all movies and filter out the ones whose names include the search term
+
+        let newMovies = this.filterThruMovies(e.target.value)
+        
+        //gat a list of just the new movies that match the search term and set it to fliteredMovies
+        this.setState({ movieTitle: e.target.value, filteredMovies: newMovies })
     }
 
-  
-
+    filterThruMovies = movieTitle => {
+        return this.state.movieData.filter((movie) => {
+            return movie.Title.includes(movieTitle)
+        })
+    }
+   
 
     render() {
         console.log(this.state)
-
         return (
             <div>
                 <form className='form' onSubmit={this.fetchMovieData}>
                     <input
-                        // value={this.state.movieTitle}
+                        value={this.state.movieTitle}
                         className='input'
                         name="movie"
                         type='text'
@@ -54,7 +76,8 @@ export default class SearchMovie extends Component {
                     <button className='button' type='submit'>Search</button>
                 </form>
                 <div>
-                    <MovieResults movieInfo={this.state.movieData} />
+                    <MovieResults search={this.handleSearch} movieInfo={this.state.movieData} />
+                   
                 </div>
             </div>
         )

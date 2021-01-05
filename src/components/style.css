@@ -1,5 +1,5 @@
 html {
-    font-size: 10px;
+    font-size: 14px;
 }
 
 * {
@@ -21,12 +21,6 @@ small {
     font-size: 1.2rem;
 }
 
-.container {
-    margin: 0 auto;
-    max-width:100px;
-    padding: 70px;
-    font-size: medium;
-}
 
 .title {
     font-size: 4.4rem;
@@ -34,48 +28,50 @@ small {
 }
 
 .form {
-    display:grid;
+    display: grid inline-grid;
 }
 
 
-.input {
+/* .input {
     font-size: 1.6rem;
     padding: 0.5rem 2rem;
     line-height: 2.8rem;
     border-radius: 20px;
     border: 1px solid #ddd;
     margin-bottom: 1rem;
-}
+} */
 
 .button {
-    background-color: rgba(0,0,0,0.75);
+
+    list-style: none;
+    text-align: center;
+    line-height: 60px;
+    background-color: rgba(52, 186, 235);
     color: white;
-    padding: 1rem 2rem;
-    border: 1px solid rgba(0,0,0,0.75);
-    border-radius: 20px;
-    font-size: 1.4rem;
     cursor: pointer;
     transition: background-color 250ms;
 }
 
 .button:hover {
-    background-color: rgba(0,0,0,0.85);
+    background-color: rgba(225, 241, 247);
 }
 
-@media (min-width:786px){
-    .form {
-        grid-template-columns: auto 1fr auto;
-        grid-gap: 1rem;
-        align-items: center;
-    }
-    
-    .input {
-        margin-bottom: 0;
-    }
-}
+
 
 .list-item{
     display: flex;
     justify-content: space-between;
     padding: 9px 0;
 }
+
+.wrapper {
+    width: 300px;
+  height: 100px;
+  padding: 20px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin: -70px 0 0 -170px;
+  }
