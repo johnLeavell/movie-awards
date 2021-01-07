@@ -11,14 +11,20 @@ export default class SearchMovie extends Component {
         this.state = {
             movieTitle: '',
             movieData: [],
-            favoriteMovies: [],
-        }
+            isFavoriteMovie: null,
+        };
     }
 
     handleMovieTitleChange = e => {
         this.setState({
           movieTitle: e.target.value.trim()
         })
+    }
+
+    addToFavorites = index => {
+        this.setState({
+            isFavoriteMovie: index
+        });
     }
 
     fetchMovieData = (e) =>{
@@ -61,7 +67,7 @@ export default class SearchMovie extends Component {
                     <button type='submit'>Search</button>
                 </form>
                 <div>
-                    <MovieResults movieInfo={this.state.movieData} />
+                    <MovieResults movieInfo={this.state.movieData} addToFavorites={this.addToFavorites} />
                    
                 </div>
             </div>
