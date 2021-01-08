@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './components/Header';
-import SearchMovie from './components/SearchMovie';
+import SearchMovie from './components/MovieSearch';
 
 class App extends React.Component {
   

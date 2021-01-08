@@ -1,24 +1,32 @@
-import React from 'react';
+import React from 'react'
+import { AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import './style.css'
+
 const MovieResults = (props) => {
-    console.log(props)
-    const items = props.movieInfo.map((item, index) =>
-        <li key={index}>
-            <div>
-            {item.Title} 
-            </div>
-            <div>
-            Year Released: {item.Year}
-            <br/>
-            <button onClick={props.addToFavorites}>add to nominees</button>
-            </div>
-        </li>);
+    console.log(props);
 
-        return (
-            <div>
-                {!{items} ? "please try again" : <ul>{items}</ul>}
-            </div>
+    const items = props.movieData.map((item, index) => {
+        return(
+            <li key={index}>
+                <div>
+                    {item.Title}
+                </div>
+                <div>
+                    Year Released: {item.Year}
+                <br/>
+                {
+                    !props.isFavorite ? <AiOutlineHeart /> : <AiFillHeart />
+                }
+                </div>
+            </li>
         )
-}
-
-export default MovieResults;
+    });
+    
+          return (
+              <div>
+                  {<ul>{items}</ul>}
+              </div>
+          )
+    
+    }
+    export default MovieResults;
