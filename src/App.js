@@ -11,19 +11,30 @@ class App extends React.Component {
       movieTitle: '',
       movies: [],
       nomineeList: [],
-      isNominee: false,
+      isNominee: false
     }
   }
-
+  
   handleChange = (e) => {
     this.setState({ movieTitle: e.target.value})
   }
-  
-  toggleIsNominee = () => {
-    this.state.isNominee
-    ? this.setState({ isNominee: true })
-    : this.setState({ isNominee: true });
+
+  addToNomineeList = movie => {
+    this.setState(prevState => {
+      return {nomineeList: [...prevState.nomineeList, movie], isNominee: true}
+    })
+    
   }
+
+  deleteFromNomineeList = movie => {
+    this.setState(prevState => {
+      return {
+        nomineeList: prevState.nomineeList.filter(movieEle => movieEle !== movie),
+        isNominee: false
+      }
+    })
+  }
+
 
   fetchMovieData = (e) => {
     e.preventDefault();
@@ -39,18 +50,23 @@ class App extends React.Component {
     .catch(err => console.log(err))
   }
 
-  render(){
 
+
+
+  render(){
+    console.log(this.state);
     const { movieTitle, movies, isNominee } = this.state;
 
     return (
       <>
         <Search 
           movieTitle={movieTitle} 
-          movies={movies}  
-          isNominee={isNominee} 
+          movies={movies}
+          isNominee={isNominee}
           handleChange={this.handleChange} 
           fetchMovieData={this.fetchMovieData}
+          addToNomineeList={this.addToNomineeList}
+          deleteFromNomineeList={this.deleteFromNomineeList}
         />
       </>
     );
