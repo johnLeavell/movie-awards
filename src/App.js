@@ -1,45 +1,24 @@
 import React from 'react';
 import Search from './components/Search';
+import MovieList from './components/MovieList';
 
 const OMDB_API = process.env.REACT_APP_OMDB_API_KEY;
 const URL = `http://www.omdbapi.com/?&apikey=`;
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state ={
-      movieTitle: '',
-      movies: [],
-      nomineeList: [],
-      isNominee: false
-    }
+  state = {
+    input: '',
+    movies: []
   }
-  
+
   handleChange = (e) => {
-    this.setState({ movieTitle: e.target.value})
+    this.setState({ input: e.target.value })
   }
 
-  addToNomineeList = movie => {
-    this.setState(prevState => {
-      return {nomineeList: [...prevState.nomineeList, movie], isNominee: true}
-    })
-    
-  }
-
-  deleteFromNomineeList = movie => {
-    this.setState(prevState => {
-      return {
-        nomineeList: prevState.nomineeList.filter(movieEle => movieEle !== movie),
-        isNominee: false
-      }
-    })
-  }
-
-
-  fetchMovieData = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
-    let movieTitle = this.state.movieTitle;
+    let movieTitle = this.state.input;
 
     fetch(URL+OMDB_API+'&s='+movieTitle)
     .then(resp => resp.json())
@@ -50,28 +29,24 @@ class App extends React.Component {
     .catch(err => console.log(err))
   }
 
-
-
-
-  render(){
+  render() {
     console.log(this.state);
-    const { movieTitle, movies, isNominee } = this.state;
+    const { input, movies } = this.state;
 
     return (
-      <>
+      <div>
         <Search 
-          movieTitle={movieTitle} 
+          input={input}
           movies={movies}
-          isNominee={isNominee}
-          handleChange={this.handleChange} 
-          fetchMovieData={this.fetchMovieData}
-          addToNomineeList={this.addToNomineeList}
-          deleteFromNomineeList={this.deleteFromNomineeList}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
         />
-      </>
-    );
+        <MovieList 
+          movies={movies}
+        />
+      </div>
+    )
   }
-  
 }
 
 export default App;

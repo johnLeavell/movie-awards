@@ -1,36 +1,23 @@
-import React from 'react'
-import MovieList from './MovieList';
-import './style.css'
-const Search = (props) => {
-  console.log(props);
+import React from 'react';
 
-  const {movies, isNominee} = props;
+const Search =(props)=> {
 
-  return (
-    <div>
-      <form onSubmit={props.fetchMovieData}>
-        <label>Search For Movie</label>
-        <br />
-        <input
-          className='search-bar'
-          type='text'
-          value={props.movieTitle}
-          name="movieTitle"
-          onChange={props.handleChange}
-          ></input>
-          <br />
-          <button type='submit'>
-            Submit
-          </button>
-      </form>
-      <MovieList 
-        movies={movies}
-        isNominee={isNominee} 
-        addToNomineeList={props.addToNomineeList}
-        deleteFromNomineeList={props.deleteFromNomineeList}
-        />
-    </div>
-  )
+    return (
+      <div>
+        <div>
+          <form onSubmit={props.handleSubmit}>
+            <label>Search for Movie</label>
+            <br />
+            <input 
+              type='text'
+              value={props.input}
+              name='movieInput'
+              onChange={props.handleChange}
+            />
+          </form>
+        </div>
+      </div>
+    )
 }
 
 export default Search;
