@@ -1,21 +1,19 @@
 import React from 'react'
 
-const MovieList = props => {
+const MovieList = ({ movies }) => {
   
-  const movies = props.movies.map(movie => {
-    return (
-      <li key={movie.imdbID}>
-        <div>{movie.Title}</div>
-        <div>{movie.Year}</div>
-        <button>Add to Nominee List</button>
-      </li>
-    )
-  })
-
   return (
     <div>
       <ul>
-        {movies}
+      { movies.map( movie =>{
+        return(
+          <li key={movie.imdbID}>
+            <div>{movie.Title}</div>
+            <div>{movie.Year}</div>
+          </li>
+        )
+      })
+      }
       </ul>
     </div>
   )
